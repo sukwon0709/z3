@@ -530,6 +530,64 @@ public class Context implements AutoCloseable {
     }
 
     /**
+     * Creates a new recursive function declaration.
+     **/
+    public FuncDecl mkRecFuncDecl(Symbol name, Sort[] domain, Sort range)
+
+    {
+        checkContextMatch(name);
+        checkContextMatch(domain);
+        checkContextMatch(range);
+        return new RecFuncDecl(this, name, domain, range);
+    }
+
+    /**
+     * Creates a new recursive function declaration.
+     **/
+    public FuncDecl mkRecFuncDecl(Symbol name, Sort domain, Sort range)
+
+    {
+        checkContextMatch(name);
+        checkContextMatch(domain);
+        checkContextMatch(range);
+        Sort[] q = new Sort[] { domain };
+        return new RecFuncDecl(this, name, q, range);
+    }
+
+    /**
+     * Creates a new recursive function declaration.
+     **/
+    public FuncDecl mkRecFuncDecl(String name, Sort[] domain, Sort range)
+
+    {
+        checkContextMatch(domain);
+        checkContextMatch(range);
+        return new RecFuncDecl(this, mkSymbol(name), domain, range);
+    }
+
+    /**
+     * Creates a new recursive function declaration.
+     **/
+    public FuncDecl mkRecFuncDecl(String name, Sort domain, Sort range)
+
+    {
+        checkContextMatch(domain);
+        checkContextMatch(range);
+        Sort[] q = new Sort[] { domain };
+        return new RecFuncDecl(this, mkSymbol(name), q, range);
+    }
+
+    public void addRecDef(FuncDecl f, Expr[] args, Expr body)
+
+    {
+        checkContextMatch(f);
+        checkContextMatch(args);
+        checkContextMatch(body);
+        Native.addRecDef(nCtx(), f.getNativeObject(), args.length,
+            AST.arrayToNative(args), body.getNativeObject());
+    }
+
+    /**
      * Creates a new bound variable. 
      * @param index The de-Bruijn index of the variable 
      * @param ty The sort of the variable
