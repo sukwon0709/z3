@@ -2107,6 +2107,24 @@ public class Context implements AutoCloseable {
     }
 
     /**
+     * StrLt compare.
+     */
+    public BoolExpr mkStrLt(SeqExpr prefix, SeqExpr s)
+    {
+        checkContextMatch(prefix, s);
+        return (BoolExpr) Expr.create(this, Native.mkStrLt(nCtx(), prefix.getNativeObject(), s.getNativeObject()));
+    }
+
+    /**
+     * StrLe compare.
+     */
+    public BoolExpr mkStrLe(SeqExpr prefix, SeqExpr s)
+    {
+        checkContextMatch(prefix, s);
+        return (BoolExpr) Expr.create(this, Native.mkStrLe(nCtx(), prefix.getNativeObject(), s.getNativeObject()));
+    }
+
+    /**
      * Extract subsequence.
      */
     public SeqExpr mkExtract(SeqExpr s, IntExpr offset, IntExpr length)
